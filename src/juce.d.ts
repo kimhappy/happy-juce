@@ -1,7 +1,6 @@
 /// <reference path = 'global.d.ts'/>
 
 import { ListenerList } from './global'
-export { ListenerList }
 
 /**
  * Returns a function object that calls a function registered on the JUCE backend and forwards all
@@ -44,32 +43,6 @@ export declare function getComboBoxState(name: string): ComboBoxState
  * be received by the backend's ResourceProvider.
  */
 export declare function getBackendResourceAddress(path: string): string
-
-/**
- * This helper class is intended to aid the implementation of
- * AudioProcessorEditor::getControlParameterIndex() for editors using a WebView interface.
- *
- * Create an instance of this class and call its handleMouseMove() method in each mousemove event.
- *
- * This class can be used to continuously report the controlParameterIndexAnnotation attribute's
- * value related to the DOM element that is currently under the mouse pointer.
- *
- * This value is defined at all times as follows
- * * the annotation attribute's value for the DOM element directly under the mouse, if it has it,
- * * the annotation attribute's value for the first parent element, that has it,
- * * -1 otherwise.
- *
- * Whenever there is a change in this value, an event is emitted to the frontend with the new value.
- * You can use a ControlParameterIndexReceiver object on the backend to listen to these events.
- */
-export declare class ControlParameterIndexUpdater {
-  controlParameterIndexAnnotation: string
-  lastElement: Element | null
-  lastControlParameterIndex: string | -1 | null
-
-  constructor(controlParameterIndexAnnotation: string)
-  handleMouseMove(event: MouseEvent): void
-}
 
 /**
  * SliderState encapsulates data and callbacks that are synchronised with a WebSliderRelay object
@@ -200,12 +173,4 @@ export declare class ComboBoxState {
    * properties.choices array.
    */
   setChoiceIndex(index: number): void
-}
-
-export declare class PromiseHandler {
-  lastPromiseId: number
-  promises: Map< number, { resolve: (value: any) => void; reject: (reason?: any) => void } >
-
-  constructor()
-  createPromise(): [number, Promise< any >]
 }
