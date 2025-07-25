@@ -16,7 +16,7 @@ export const sendEvent = (
 
 export const addEventReceiver = (
   recvEventId: string,
-  callback   : (data: any) => CallbackId
+  callback   : (data: any) => any
 ): CallbackId => window.__JUCE__.backend.addEventListener(recvEventId, callback)
 
 export const removeEventReceiver = (
