@@ -1,9 +1,9 @@
 import * as juce from './juce'
 
-export const callNativeFunction = async (
+export const callNativeFunction = (
   name   : string,
   ...args: any[]
-): Promise< any > => await juce.getNativeFunction(name)(...args)
+): Promise< any > => juce.getNativeFunction(name)(...args)
 
 export const sendEvent = (
   sendEventId: string,
