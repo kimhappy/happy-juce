@@ -5,6 +5,8 @@ export const callNativeFunction = (
   ...args: any[]
 ): Promise< any > => juce.getNativeFunction(name)(...args)
 
+export const fetchResource = (path: string): Promise< Response > => fetch(juce.getBackendResourceAddress(path))
+
 export const sendEvent = (
   sendEventId: string,
   data       : any = {}
