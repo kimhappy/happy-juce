@@ -12,7 +12,7 @@ export declare class EventListenerList {
   eventListeners: Map< string, ListenerList >
 
   constructor()
-  addEventListener(eventId: string, fn: (args: any) => any): [string, number]
+  addEventListener(eventId: string, fn: (args?: any) => any): [string, number]
   removeEventListener([eventId, id]: [string, number]): void
   emitEvent(eventId: string, object: any): void
 }
@@ -21,7 +21,7 @@ export declare class Backend {
   listeners: EventListenerList
 
   constructor()
-  addEventListener(eventId: string, fn: (args: any) => any): [string, number]
+  addEventListener(eventId: string, fn: (args?: any) => any): [string, number]
   removeEventListener([eventId, id]: [string, number]): void
   emitEvent(eventId: string, object: any): void
   emitByBackend(eventId: string, object: any): void
