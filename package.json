@@ -1,6 +1,6 @@
 {
   "name": "happy-juce",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "JUCE framework WebView components",
   "author": "Hwanhee Kim <kimhappyofficial@gmail.com>",
   "license": "MIT",
@@ -34,7 +34,8 @@
     "bun-types": "^1.2.17"
   },
   "files": [
-    "dist/*"
+    "dist/*",
+    "script/postinstall.ts"
   ],
   "engines": {
     "bun": ">=1.0.0"
