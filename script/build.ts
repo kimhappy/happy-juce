@@ -11,6 +11,9 @@ await Bun.build({
   minify     : true,
   splitting  : false,
   naming     : join('[dir]', '[name].[ext]'),
+  external   : [
+    'react'
+  ],
   define     : {
     'process.env.NODE_ENV': JSON.stringify('production')
   },
