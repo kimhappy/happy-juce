@@ -6,10 +6,9 @@ export type ToggleStore = {
   checked: boolean
 
   setChecked: (checked: boolean) => void
-  toggle    : () => void
 }
 
-export const useToggleStore = createWithKey< ToggleStore >()(< Key extends string >(key: Key) => (set, get) => {
+export const useToggleStore = createWithKey< ToggleStore >()(< Key extends string >(key: Key) => (set) => {
   const state = getToggleState(key)
 
   state.valueChangedEvent.addListener(() => set({
@@ -20,8 +19,6 @@ export const useToggleStore = createWithKey< ToggleStore >()(< Key extends strin
     type   : 'checkbox' as const,
     checked: state.getValue()   ,
 
-    setChecked: state.setValue,
-
-    toggle: (): void => get().setChecked(!get().checked)
+    setChecked: state.setValue
   }
 })
