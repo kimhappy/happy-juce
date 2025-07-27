@@ -4,23 +4,26 @@ import { getComboBoxState } from '../juce'
 export type ComboStore = {
   choices: string[]
   index  : number
+  value  : string
 
   setIndex: (index: number) => boolean
 }
 
-export const useComboStore = createWithKey< ComboStore >((key, set) => {
+export const useComboStore = createWithKey< ComboStore >((key, set, get) => {
   const state = getComboBoxState(key)
 
   state.valueChangedEvent.addListener(() => set({
-    index: state.getChoiceIndex()
+    index: state.getChoiceIndex(),
+    value: get().choices[ state.getChoiceIndex() ]
   }))
 
   return {
-    choices: state.properties.choices,
-    index  : state.getChoiceIndex()  ,
+    choices: state.properties.choices                          ,
+    index  : state.getChoiceIndex()                            ,
+    value  : state.properties.choices[ state.getChoiceIndex() ],
 
     setIndex: (index: number): boolean => {
-      if (index < 0 || index >= state.properties.choices.length) {
+      if (index < 0 || index >= get().choices.length) {
         return false
       }
 

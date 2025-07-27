@@ -8,7 +8,7 @@ export type ToggleStore = {
   toggle  : () => void
 }
 
-export const useToggleStore = createWithKey< ToggleStore >((key, set) => {
+export const useToggleStore = createWithKey< ToggleStore >((key, set, get) => {
   const state = getToggleState(key)
 
   state.valueChangedEvent.addListener(() => set({
@@ -23,7 +23,7 @@ export const useToggleStore = createWithKey< ToggleStore >((key, set) => {
     },
 
     toggle: (): void => {
-      state.setValue(!state.getValue())
+      state.setValue(!get().value)
     }
   }
 })
