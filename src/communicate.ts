@@ -1,6 +1,6 @@
 import * as juce from './juce'
 
-type CallbackId = [string, number]
+export type ReceiverId = [string, number]
 
 export const callNativeFunction = (
   name   : string,
@@ -17,8 +17,8 @@ export const sendEvent = (
 export const addEventReceiver = (
   recvEventId: string,
   callback   : (data?: any) => any
-): CallbackId => window.__JUCE__.backend.addEventListener(recvEventId, callback)
+): ReceiverId => window.__JUCE__.backend.addEventListener(recvEventId, callback)
 
 export const removeEventReceiver = (
-  callbackId: CallbackId
-): void => window.__JUCE__.backend.removeEventListener(callbackId)
+  receiverId: ReceiverId
+): void => window.__JUCE__.backend.removeEventListener(receiverId)

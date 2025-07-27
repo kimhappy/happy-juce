@@ -1,3 +1,3 @@
 export * from './data'
 export * from './communicate'
-export * from './hook'
+export * from './store'

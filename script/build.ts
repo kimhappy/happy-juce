@@ -12,7 +12,7 @@ await Bun.build({
   splitting  : false,
   naming     : join('[dir]', '[name].[ext]'),
   external   : [
-    'react'
+    'zustand'
   ],
   define     : {
     'process.env.NODE_ENV': JSON.stringify('production')
