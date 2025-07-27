@@ -2,64 +2,66 @@ import { createWithKey  } from 'happy-create'
 import { getSliderState } from '../juce'
 
 export type SliderStore = {
-  start     : number
-  end       : number
+  type      : 'range'
+  min       : number
+  max       : number
+  step      : number
+  value     : number
   skew      : number
+  normalised: number
   numSteps  : number
-  interval  : number
-  normalized: number
-  scaled    : number
 
-  setNormalized: (normalized: number) => boolean
-  setScaled    : (scaled    : number) => boolean
+  setNormalised: (normalised: number) => boolean
+  setValue     : (value     : number) => boolean
 }
 
-export const useSliderStore = createWithKey< SliderStore >((key, set, get) => {
+export const useSliderStore = createWithKey< SliderStore >()(< Key extends string >(key: Key) => (set, get) => {
   const state = getSliderState(key)
 
   state.valueChangedEvent.addListener(() => set({
-    normalized: state.getNormalisedValue(),
-    scaled    : state.getScaledValue    ()
+    value     : state.getScaledValue    (),
+    normalised: state.getNormalisedValue()
   }))
 
   return {
-    start     : state.properties.start    ,
-    end       : state.properties.end      ,
+    type      : 'range' as const          ,
+    min       : state.properties.start    ,
+    max       : state.properties.end      ,
+    step      : state.properties.interval ,
+    value     : state.getScaledValue    (),
     skew      : state.properties.skew     ,
+    normalised: state.getNormalisedValue(),
     numSteps  : state.properties.numSteps ,
-    interval  : state.properties.interval ,
-    normalized: state.getNormalisedValue(),
-    scaled    : state.getScaledValue    (),
 
-    setNormalized: (normalized: number): boolean => {
-      if (normalized < 0 || normalized > 1) {
+    setNormalised: (normalised: number): boolean => {
+      if (normalised < 0 || normalised > 1) {
         return false
       }
 
-      state.setNormalisedValue(normalized)
+      state.setNormalisedValue(normalised)
       return true
     },
 
-    setScaled: (scaled: number): boolean =>
-      get().setNormalized(
-        scaledToNormalized(
-          get().start,
-          get().end  ,
-          get().skew ,
-          scaled))
+    setValue: (value: number): boolean =>
+      get().setNormalised(
+        scaledToNormalised(
+          get().min ,
+          get().max ,
+          get().skew,
+          value))
   }
 })
 
-export const scaledToNormalized = (
+export const scaledToNormalised = (
   start : number,
   end   : number,
   skew  : number,
   scaled: number
 ): number => Math.pow((scaled - start) / (end - start), skew)
 
-export const normalizedToScaled = (
+export const normalisedToScaled = (
   start     : number,
   end       : number,
   skew      : number,
-  normalized: number
-): number => Math.pow(normalized, 1 / skew) * (end - start) + start
+  normalised: number
+): number => Math.pow(normalised, 1 / skew) * (end - start) + start

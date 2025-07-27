@@ -2,28 +2,26 @@ import { createWithKey  } from 'happy-create'
 import { getToggleState } from '../juce'
 
 export type ToggleStore = {
-  value: boolean
+  type   : 'checkbox'
+  checked: boolean
 
-  setValue: (value: boolean) => void
-  toggle  : () => void
+  setChecked: (checked: boolean) => void
+  toggle    : () => void
 }
 
-export const useToggleStore = createWithKey< ToggleStore >((key, set, get) => {
+export const useToggleStore = createWithKey< ToggleStore >()(< Key extends string >(key: Key) => (set, get) => {
   const state = getToggleState(key)
 
   state.valueChangedEvent.addListener(() => set({
-    value: state.getValue()
+    checked: state.getValue()
   }))
 
   return {
-    value: state.getValue(),
+    type   : 'checkbox' as const,
+    checked: state.getValue()   ,
 
-    setValue: (value: boolean): void => {
-      state.setValue(value)
-    },
+    setChecked: state.setValue,
 
-    toggle: (): void => {
-      state.setValue(!get().value)
-    }
+    toggle: (): void => get().setChecked(!get().checked)
   }
 })

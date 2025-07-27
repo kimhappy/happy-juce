@@ -1,6 +1,6 @@
 {
   "name": "happy-juce",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "JUCE framework WebView components",
   "author": "Hwanhee Kim <kimhappyofficial@gmail.com>",
   "license": "MIT",
@@ -24,14 +24,10 @@
     "postinstall": "bun script/postinstall.ts",
     "prepublishOnly": "bun run clear && bun i && bun run build"
   },
-  "peerDependencies": {
-    "zustand": "^5.0.6"
-  },
   "devDependencies": {
     "@types/bun": "^1.2.18",
     "bun-plugin-dts": "^0.3.0",
-    "bun-types": "^1.2.17",
-    "zustand": "^5.0.6"
+    "bun-types": "^1.2.17"
   },
   "files": [
     "dist/*",
@@ -41,6 +37,6 @@
     "bun": ">=1.0.0"
   },
   "dependencies": {
-    "happy-create": "^0.1.0"
+    "happy-create": "^0.5.0"
   }
 }

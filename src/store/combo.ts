@@ -2,14 +2,14 @@ import { createWithKey    } from 'happy-create'
 import { getComboBoxState } from '../juce'
 
 export type ComboStore = {
+  value  : string
   choices: string[]
   index  : number
-  value  : string
 
   setIndex: (index: number) => boolean
 }
 
-export const useComboStore = createWithKey< ComboStore >((key, set, get) => {
+export const useComboStore = createWithKey< ComboStore >()((key: string) => (set, get) => {
   const state = getComboBoxState(key)
 
   state.valueChangedEvent.addListener(() => set({
