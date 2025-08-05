@@ -17,10 +17,10 @@ export type SliderStore = {
 
 const _computed = createComputed((state: SliderStore) => ({
   sliderProps: {
-    min          : 0               ,
-    max          : 1               ,
-    step         : state.interval  ,
-    value        : state.normalised,
+    min          : 0                 ,
+    max          : 1                 ,
+    step         : state.interval    ,
+    value        : [state.normalised],
     onValueChange: (value: number[]) => {
       if (value.length === 1)
         state.setNormalised(value[ 0 ])

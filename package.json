@@ -1,6 +1,6 @@
 {
   "name": "happy-juce",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "JUCE framework WebView components",
   "author": "Hwanhee Kim <kimhappyofficial@gmail.com>",
   "license": "MIT",
