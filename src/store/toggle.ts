@@ -10,9 +10,9 @@ export type ToggleStore = {
 }
 
 const _computed = createComputed((state: ToggleStore) => ({
-  props: {
-    type   : 'checkbox' as const,
-    checked: state.checked
+  switchProps: {
+    checked        : state.checked,
+    onCheckedChange: state.setChecked
   }
 }))
 

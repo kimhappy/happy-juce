@@ -1,6 +1,3 @@
-#!/usr/bin/env bun
-
-const JUCE_DIRECTORY      = 'JUCE'
 const JUCE_REPOSITORY_URL = Bun.env.HAPPY_JUCE_REPOSITORY_URL ?? 'https://github.com/juce-framework/JUCE'
 const JUCE_BRANCH         = Bun.env.HAPPY_JUCE_BRANCH         ?? 'master'
 
@@ -12,5 +9,5 @@ Bun.spawnSync([
   '--branch'         ,
   JUCE_BRANCH        ,
   JUCE_REPOSITORY_URL,
-  JUCE_DIRECTORY
+  'JUCE'
 ], { stdio: ['ignore', 'ignore', 'ignore'] })

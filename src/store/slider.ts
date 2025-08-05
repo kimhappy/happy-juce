@@ -16,20 +16,15 @@ export type SliderStore = {
 }
 
 const _computed = createComputed((state: SliderStore) => ({
-  normalisedProps: {
-    type : 'range' as const,
-    min  : 0               ,
-    max  : 1               ,
-    step : state.interval  ,
-    value: state.normalised
-  },
-
-  scaledProps: {
-    type : 'range' as const,
-    min  : state.start     ,
-    max  : state.end       ,
-    step : state.interval  ,
-    value: state.scaled
+  sliderProps: {
+    min          : 0               ,
+    max          : 1               ,
+    step         : state.interval  ,
+    value        : state.normalised,
+    onValueChange: (value: number[]) => {
+      if (value.length === 1)
+        state.setNormalised(value[ 0 ])
+    }
   }
 }))
 
@@ -53,9 +48,8 @@ export const useSliderStore = createWithKey< SliderStore >()(
         scaled    : state.getScaledValue    (),
 
         setNormalised: (normalised: number): boolean => {
-          if (normalised < 0 || normalised > 1) {
+          if (normalised < 0 || normalised > 1)
             return false
-          }
 
           state.setNormalisedValue(normalised)
           return true

@@ -1,5 +1,3 @@
-#!/usr/bin/env bun
-
 import { join } from 'path'
 import   dts    from 'bun-plugin-dts'
 

@@ -5,15 +5,17 @@ import { getComboBoxState } from '../juce'
 export type ComboStore = {
   choices: string[]
   index  : number
+  value  : string
 
   setIndex: (index: number) => boolean
+  setValue: (value: string) => boolean
 }
 
 const _computed = createComputed((state: ComboStore) => ({
-  value: state.choices[ state.index ],
-
-  props: {
-    value: state.choices[ state.index ]
+  comboProps: {
+    choices         : state.choices,
+    selected        : state.index  ,
+    onSelectedChange: state.setIndex
   }
 }))
 
@@ -23,17 +25,28 @@ export const useComboStore = createWithKey< ComboStore >()(
       const state = getComboBoxState(key)
 
       state.valueChangedEvent.addListener(() => set({
-        index: state.getChoiceIndex()
+        index: state.getChoiceIndex(),
+        value: state.properties.choices[ state.getChoiceIndex() ]
       }))
 
       return {
-        choices: state.properties.choices,
-        index  : state.getChoiceIndex()  ,
+        choices: state.properties.choices                          ,
+        index  : state.getChoiceIndex()                            ,
+        value  : state.properties.choices[ state.getChoiceIndex() ],
 
         setIndex: (index: number): boolean => {
-          if (index < 0 || index >= get().choices.length) {
+          if (index < 0 || index >= get().choices.length)
             return false
-          }
+
+          state.setChoiceIndex(index)
+          return true
+        },
+
+        setValue: (value: string): boolean => {
+          const index = state.properties.choices.indexOf(value)
+
+          if (index === -1)
+            return false
 
           state.setChoiceIndex(index)
           return true
