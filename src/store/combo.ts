@@ -1,5 +1,4 @@
 import { createWithKey    } from 'happy-create'
-import { createComputed   } from 'zustand-computed'
 import { getComboBoxState } from '../juce'
 
 export type ComboStore = {
@@ -11,17 +10,9 @@ export type ComboStore = {
   setValue: (value: string) => boolean
 }
 
-const _computed = createComputed((state: ComboStore) => ({
-  comboProps: {
-    choices         : state.choices,
-    selected        : state.index  ,
-    onSelectedChange: state.setIndex
-  }
-}))
-
 export const useComboStore = createWithKey< ComboStore >()(
   < Key extends string >(key: Key) =>
-    _computed((set, get) => {
+    (set, get) => {
       const state = getComboBoxState(key)
 
       state.valueChangedEvent.addListener(() => set({
@@ -53,5 +44,4 @@ export const useComboStore = createWithKey< ComboStore >()(
         }
       }
     }
-  )
 )

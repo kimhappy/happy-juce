@@ -1,5 +1,4 @@
 import { createWithKey  } from 'happy-create'
-import { createComputed } from 'zustand-computed'
 import { getSliderState } from '../juce'
 
 export type SliderStore = {
@@ -15,22 +14,9 @@ export type SliderStore = {
   setScaled    : (scaled    : number) => boolean
 }
 
-const _computed = createComputed((state: SliderStore) => ({
-  sliderProps: {
-    min          : 0                 ,
-    max          : 1                 ,
-    step         : state.interval    ,
-    value        : [state.normalised],
-    onValueChange: (value: number[]) => {
-      if (value.length === 1)
-        state.setNormalised(value[ 0 ])
-    }
-  }
-}))
-
 export const useSliderStore = createWithKey< SliderStore >()(
   < Key extends string >(key: Key) =>
-    _computed((set, get) => {
+    (set, get) => {
       const state = getSliderState(key)
 
       state.valueChangedEvent.addListener(() => set({
@@ -64,7 +50,6 @@ export const useSliderStore = createWithKey< SliderStore >()(
               scaled))
       }
     }
-  )
 )
 
 export const scaledToNormalised = (
